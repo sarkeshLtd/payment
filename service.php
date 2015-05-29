@@ -20,12 +20,12 @@ class service extends module{
                 if($transaction->state == 0){
                     $registry = core\registry::singleton();
                     $api = $registry->get('payment','paylineApi');
-                    $url = 'http://payline.ir/payment-test/gateway-send';
+                    $url = 'http://payline.ir/payment/gateway-send';
                     $amount = $transaction->amount;
                     $redirect = urlencode(core\general::createUrl(['service','payment','checkPayment',PLUGIN_OPTIONS]));
                     $result = \payline\payline::send($url,$api,$amount,$redirect);
                     if($result > 0){
-                        $go ="http://payline.ir/payment-test/gateway-$result";
+                        $go ="http://payline.ir/payment/gateway-$result";
                         header("Location: $go");
                         return $result;
                     }
@@ -43,7 +43,7 @@ class service extends module{
       */
     public function checkPayment(){
         if(defined('PLUGIN_OPTIONS') && isset($_POST['trans_id']) && isset($_POST['id_get'])){
-            $url ='http://payline.ir/payment-test/gateway-result-second';
+            $url ='http://payline.ir/payment/gateway-result-second';
             $registry = core\registry::singleton();
             $api = $registry->get('payment','paylineApi');
             $trans_id = $_POST['trans_id'];
@@ -67,6 +67,8 @@ class service extends module{
                 core\router::jump(['payment','successMsg',$transaction->sid]);
             }
         }
-        return browser\msg::pageNotFound();
+        //jump to error page
+        core\router::jump(['payment','failPaymentMsg']);
+        return '';
     }
 }

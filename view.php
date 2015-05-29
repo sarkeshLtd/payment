@@ -160,4 +160,22 @@ trait view {
         $form->add($table);
         return [_('Transactions'),$form->draw()];
     }
+
+    /**
+     * show fail message in payment system
+     * @return array [title,body]
+     */
+    public function viewFailPaymentMsg(){
+        $form = new control\form('frmPaymentFailMsgPayment');
+        $label = new control\label(_('Your are canceled your payment process or we have an error in payment system.'));
+        $label->type = 'warning';
+        $form->add($label);
+
+        $btnHome = new control\button('frmBtn');
+        $btnHome->label = _('Home');
+        $btnHome->type = 'primary';
+        $btnHome->href = SiteDomain;
+        $form ->add($btnHome);
+        return [_('Fail in payment'),$form->draw()];
+    }
 }

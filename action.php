@@ -51,4 +51,12 @@ class action extends module{
             return $this->moduleTransactions();
         return browser\msg::pageAccessDenied();
     }
+
+    /**
+     * show fail message in payment system
+     * @return array [title,body]
+     */
+    public function failPaymentMsg(){
+        return $this->viewFailPaymentMsg();
+    }
 }
