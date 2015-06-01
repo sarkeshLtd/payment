@@ -64,11 +64,10 @@ class service extends module{
                         call_user_func(array('\\addon\\plugin\\' . $transaction->plugin . '\\module',$transaction->action),$transaction->sid);
                 }
                 //jump to show succesfull message
-                core\router::jump(['payment','successMsg',$transaction->sid]);
+                return core\router::jump(['payment','successMsg',$transaction->sid]);
             }
         }
         //jump to error page
-        core\router::jump(['payment','failPaymentMsg']);
-        return '';
+        return core\router::jump(['payment','failPaymentMsg']);
     }
 }
