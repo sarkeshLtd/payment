@@ -28,6 +28,5 @@ trait addons {
         $orm->store($transaction);
         return $transaction->sid;
     }
-    
-    
+
 }

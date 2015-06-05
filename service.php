@@ -20,12 +20,11 @@ class service extends module{
                 if($transaction->state == 0){
                     $registry = core\registry::singleton();
                     $api = $registry->get('payment','paylineApi');
-                    $url = 'http://payline.ir/payment/gateway-send';
                     $amount = $transaction->amount;
                     $redirect = urlencode(core\general::createUrl(['service','payment','checkPayment',PLUGIN_OPTIONS]));
-                    $result = \payline\payline::send($url,$api,$amount,$redirect);
+                    $result = \payline\payline::send($api,$amount,$redirect);
                     if($result > 0){
-                        $go ="http://payline.ir/payment/gateway-$result";
+                        $go = \payline\payline::paymentUrl($result);
                         header("Location: $go");
                         return $result;
                     }
@@ -43,12 +42,11 @@ class service extends module{
       */
     public function checkPayment(){
         if(defined('PLUGIN_OPTIONS') && isset($_POST['trans_id']) && isset($_POST['id_get'])){
-            $url ='http://payline.ir/payment/gateway-result-second';
             $registry = core\registry::singleton();
             $api = $registry->get('payment','paylineApi');
             $trans_id = $_POST['trans_id'];
             $id_get = $_POST['id_get'];
-            $result =\payline\payline::get($url,$api,$trans_id,$id_get);
+            $result =\payline\payline::get($api,$trans_id,$id_get);
             if($result == 1) {
                 //payment was successful;
                 $orm = db\orm::singleton();

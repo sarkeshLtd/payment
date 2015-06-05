@@ -167,7 +167,7 @@ trait view {
      */
     public function viewFailPaymentMsg(){
         $form = new control\form('frmPaymentFailMsgPayment');
-        $label = new control\label(_('Your are canceled your payment process or we have an error in payment system.'));
+        $label = new control\label(_('payment proccess was fail.'));
         $label->type = 'warning';
         $form->add($label);
 
